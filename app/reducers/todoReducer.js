@@ -5,6 +5,7 @@ const initialState = {
     description: '',
     deadline: 'Wed Mar 25 2015 04:00:00 GMT+0400 (+04)',
     id: null,
+    fingerprint: '0x00000000',
     todos: []
 }
 
@@ -43,6 +44,11 @@ export const todoReducer = (state = initialState, action) => {
                 description: initialState.description,
                 deadline: initialState.deadline,
                 id: initialState.id
+            };
+        case TodoActionTypes.CHANGE_FINGERPRINT:
+
+            return {
+                ...state, fingerprint: action.fingerprint
             };
         default:
             return state;

@@ -30,4 +30,5 @@ export function reducer(state = initialState, action) {
     }
 }
 
+// state.todo is defined here
 export default combineReducers({todo})

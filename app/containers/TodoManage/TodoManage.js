@@ -1,9 +1,11 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { withRouter } from 'react-router-dom';
+import {bindActionCreators} from 'redux';
+import {withRouter} from 'react-router-dom';
 import * as todoActions from '../../actions/todoActions';
-import { TodoForm } from '../../components/TodoForm';
+import {TodoForm} from '../../components/TodoForm';
+
+import Fingerprint2 from 'fingerprintjs2'
 
 class TodoManage extends Component {
     constructor(props) {
@@ -22,20 +24,28 @@ class TodoManage extends Component {
         } else {
             actions.clear_todo_data();
         }
+
+        Fingerprint2.get(function (components) {
+            const fp = Fingerprint2.x64hash128(components.map(function (pair) {
+                return pair.value
+            }).join(), 31);
+            actions.change_fingerprint(fp);
+        });
+
     }
 
     changeName(event) {
-        const { actions } = this.props;
+        const {actions} = this.props;
         actions.change_todo_name(event.target.value);
     }
 
     changeDescription(event) {
-        const { actions } = this.props;
+        const {actions} = this.props;
         actions.change_todo_description(event.target.value);
     }
 
     changeDeadline(time) {
-        const { actions } = this.props;
+        const {actions} = this.props;
         actions.change_todo_deadline(time);
     }
 
@@ -45,8 +55,8 @@ class TodoManage extends Component {
 
         event.preventDefault();
         todo.id
-        ? actions.edit_todo(name, description, deadline, id)
-        : actions.create_todo(name, description, deadline, id);
+            ? actions.edit_todo(name, description, deadline, id)
+            : actions.create_todo(name, description, deadline, id);
         history.push('/');
     }
 

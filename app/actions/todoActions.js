@@ -65,3 +65,10 @@ export const clear_todo_data = () => {
         type: actionTypes.CLEAR_TODO_DATA,
     }
 };
+
+export const change_fingerprint = (fingerprint) => {
+    return {
+        type: actionTypes.CHANGE_FINGERPRINT,
+        fingerprint
+    }
+};

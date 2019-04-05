@@ -7,13 +7,13 @@ const requestPort = `${appConfig.apiPort}`;
 let config = {
     baseURL: 'http://127.0.0.1:3001/api',
     transformRequest: [
-      (data) => {
-        let ret = '';
-        for (let it in data) {
-            ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+        (data) => {
+            let ret = '';
+            for (let it in data) {
+                ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+            }
+            return ret;
         }
-        return ret;
-      }
     ],
     transformResponse: [
         (data) => {
@@ -31,17 +31,33 @@ axios.interceptors.response.use((res) => {
     return res.data;
 });
 
-export const get = (url) => {
-    return axios.get(url, config)
+export const get = (url, extra) => {
+    extra = extra || {};
+    extra.headers = {...config.headers, ...extra.headers || {}};
+
+    let c = {...config, ...extra};
+    return axios.get(url, c)
 };
 
-export const post = (url, data) => {
-    return axios.post(url, data, config)
+export const post = (url, data, extra) => {
+    extra = extra || {};
+    extra.headers = {...config.headers, ...extra.headers || {}};
+
+    let c = {...config, ...extra};
+    return axios.post(url, data, c)
 };
 
-export const update = (url, data) => {
-    return axios.put(url, data, config)
+export const update = (url, data, extra) => {
+    extra = extra || {};
+    extra.headers = {...config.headers, ...extra.headers || {}};
+
+    let c = {...config, ...extra};
+    return axios.put(url, data, c)
 };
-export const remove = (url, data) => {
-    return axios.delete(url,  data, config)
+export const remove = (url, extra) => {
+    extra = extra || {};
+    extra.headers = {...config.headers, ...extra.headers || {}};
+
+    let c = {...config, ...extra};
+    return axios.delete(url, c)
 };

@@ -7,7 +7,7 @@ export const getAll = (req, res) => {
 };
 
 export const getOne = (req, res) => {
-    Todo.findOne({_id: req.params.id})
+    Todo.findOne({_id: req.params.id, fingerprint: req.headers.fingerprint})
         .then(todo => res.send(todo))
         .catch(err => res.end(err));
 };

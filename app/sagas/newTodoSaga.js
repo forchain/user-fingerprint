@@ -27,7 +27,11 @@ export function* getTodoListFlow() {
 export function* getTodo(id) {
     yield put({type: IndexActionTypes.FETCH_START});
     try {
-        return yield call(get, `/todo/${id}`);
+        let fingerprint = yield select(state => {
+            return state.user.fingerprint
+        });
+
+        return yield call(get, `/todo/${id}`, {headers: {fingerprint}});
     } catch (err) {
         yield put({type: IndexActionTypes.SET_MESSAGE, msgContent: "Can't Get Todo List", msgType: 0});
     } finally {

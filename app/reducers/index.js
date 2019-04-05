@@ -3,7 +3,7 @@ import {combineReducers} from 'redux';
 import {IndexActionTypes} from '../actionTypes';
 
 const initialState = {
-    fingerprint: '0x00000000',
+    fingerprint: '',
     isFetching: true
 };
 

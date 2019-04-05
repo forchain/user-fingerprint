@@ -32,8 +32,7 @@ class IndexApp extends Component {
         return (
             <div>
                 <h1 className='app-page-title'>Todo Manager</h1>
-                {/*<Fingerprint/>*/}
-                <h2>Fingerprint: {this.props.index.fingerprint}</h2>
+                <Fingerprint fingerprint={this.props.index.fingerprint}/>
                 <Router>
                     <Switch>
                         <Route exact path={'/'} component={Home}/>

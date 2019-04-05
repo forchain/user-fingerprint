@@ -11,8 +11,6 @@ class TodoForm extends PureComponent {
 
     return (
       <div className='create-todo-form'>
-          <div>Fingerprint: {todo.fingerprint}</div>
-
           {!todo.id && <h3>Create todo</h3>}
           {todo.id && <h3>Edit todo</h3>}
           <form onSubmit={(event) => onFormSubmit(event)}>

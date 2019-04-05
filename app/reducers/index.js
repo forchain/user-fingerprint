@@ -1,9 +1,9 @@
 import {todoReducer as todo} from './todoReducer'
+import {userReducer as user} from './userReducer'
 import {combineReducers} from 'redux';
 import {IndexActionTypes} from '../actionTypes';
 
 const initialState = {
-    fingerprint: '',
     isFetching: true
 };
 
@@ -26,15 +26,10 @@ export function reducer(state = initialState, action) {
                     content: action.msgContent
                 }
             };
-
-        case IndexActionTypes.CHANGE_FINGERPRINT:
-            return {
-                ...state, fingerprint: action.fingerprint
-            };
         default:
             return state
     }
 }
 
 // state.todo is defined here
-export default combineReducers({todo, index: reducer})
+export default combineReducers({todo, index: reducer, user})

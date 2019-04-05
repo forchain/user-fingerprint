@@ -5,8 +5,6 @@ import {withRouter} from 'react-router-dom';
 import * as todoActions from '../../actions/todoActions';
 import {TodoForm} from '../../components/TodoForm';
 
-import Fingerprint2 from 'fingerprintjs2'
-
 class TodoManage extends Component {
     constructor(props) {
         super(props);
@@ -48,7 +46,7 @@ class TodoManage extends Component {
         event.preventDefault();
         todo.id
             ? actions.edit_todo(name, description, deadline, id)
-            : actions.create_todo(name, description, deadline, id);
+            : actions.create_todo(name, description, deadline);
         history.push('/');
     }
 
@@ -69,7 +67,8 @@ class TodoManage extends Component {
 
 function mapStateToProps(state) {
     return {
-        todo: state.todo
+        todo: state.todo,
+        user: state.user
     }
 }
 

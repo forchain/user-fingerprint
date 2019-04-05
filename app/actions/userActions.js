@@ -1,4 +1,4 @@
-import * as actionTypes from '../actionTypes/indexActionTypes';
+import {UserActionTypes as actionTypes} from '../actionTypes'
 
 export const change_fingerprint = (fingerprint) => {
     return {

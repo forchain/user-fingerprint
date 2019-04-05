@@ -1,9 +1,9 @@
-import { take, call, put, select } from 'redux-saga/effects';
-import { get, post, update, remove } from '../fetch';
-import { TodoActionTypes , IndexActionTypes} from '../actionTypes';
+import {take, call, put, select} from 'redux-saga/effects';
+import {get, post, update, remove} from '../fetch';
+import {TodoActionTypes, IndexActionTypes} from '../actionTypes';
 
 
-export function* getTodoList () {
+export function* getTodoList() {
     yield put({type: IndexActionTypes.FETCH_START});
     try {
         return yield call(get, `/todo`);
@@ -14,17 +14,17 @@ export function* getTodoList () {
     }
 }
 
-export function* getTodoListFlow () {
-    while (true){
+export function* getTodoListFlow() {
+    while (true) {
         let req = yield take(TodoActionTypes.GET_TODOS);
         let res = yield call(getTodoList);
-        if(res){
-            yield put({type:TodoActionTypes.GET_TODOS_RESPONSE,data:res})
+        if (res) {
+            yield put({type: TodoActionTypes.GET_TODOS_RESPONSE, data: res})
         }
     }
 }
 
-export function* getTodo (id) {
+export function* getTodo(id) {
     yield put({type: IndexActionTypes.FETCH_START});
     try {
         return yield call(get, `/todo/${id}`);
@@ -35,21 +35,25 @@ export function* getTodo (id) {
     }
 }
 
-export function* getTodoFlow () {
-    while (true){
+export function* getTodoFlow() {
+    while (true) {
         let req = yield take(TodoActionTypes.GET_TODO_BY_ID);
         let res = yield call(getTodo, req.id);
-        if(res){
+        if (res) {
 
-            yield put({type:TodoActionTypes.GET_TODO_BY_ID_RESPONSE, data: res})
+            yield put({type: TodoActionTypes.GET_TODO_BY_ID_RESPONSE, data: res})
         }
     }
 }
 
-export function* editTodo (id, name, description, deadline) {
+export function* editTodo(id, name, description, deadline) {
     yield put({type: IndexActionTypes.FETCH_START});
     try {
-        return yield call(update, `/todo`, {id, name, description, deadline});
+        let fingerprint = yield select(state => {
+            return state.user.fingerprint
+        });
+        let data = {id, name, description, deadline, fingerprint};
+        return yield call(update, `/todo`, data);
     } catch (err) {
         yield put({type: IndexActionTypes.SET_MESSAGE, msgContent: "Can't Get Todo List", msgType: 0});
     } finally {
@@ -57,17 +61,17 @@ export function* editTodo (id, name, description, deadline) {
     }
 }
 
-export function* editTodoFlow () {
-    while (true){
+export function* editTodoFlow() {
+    while (true) {
         let req = yield take(TodoActionTypes.EDIT_TODO);
         let res = yield call(editTodo, req.id, req.name, req.description, req.deadline);
-        if(res){
-            yield put({type:TodoActionTypes.GET_TODOS_RESPONSE,data:res})
+        if (res) {
+            yield put({type: TodoActionTypes.GET_TODOS_RESPONSE, data: res})
         }
     }
 }
 
-export function* deleteTodo (id) {
+export function* deleteTodo(id) {
     yield put({type: IndexActionTypes.FETCH_START});
     try {
         return yield call(remove, `/api/todo/${id}`, {});
@@ -78,13 +82,13 @@ export function* deleteTodo (id) {
     }
 }
 
-export function* deleteTodoFlow () {
-    while (true){
+export function* deleteTodoFlow() {
+    while (true) {
         let req = yield take(TodoActionTypes.DELETE_TODO);
         let delResult = yield call(deleteTodo, req.id);
         let res = yield call(getTodoList);
-        if(res){
-            yield put({type:TodoActionTypes.GET_TODOS_RESPONSE,data:res})
+        if (res) {
+            yield put({type: TodoActionTypes.GET_TODOS_RESPONSE, data: res})
         }
     }
 }
@@ -92,13 +96,16 @@ export function* deleteTodoFlow () {
 export function* saveTodo(data) {
     yield put({type: IndexActionTypes.FETCH_START});
     try {
-        let id = yield select(state=>{
+        let id = yield select(state => {
             state.id
         });
-        if(id){
+        data.fingerprint = yield select(state => {
+            return state.user.fingerprint
+        });
+        if (id) {
             data.id = id;
             return yield call(put, '/todo', data);
-        }else{
+        } else {
             return yield call(post, '/todo', data);
         }
 
@@ -112,11 +119,11 @@ export function* saveTodo(data) {
 export function* newTodoFlow() {
     while (true) {
         let request = yield take(TodoActionTypes.CREATE_TODO);
-            let res = yield call(saveTodo, request);
-            if (res) {
-                if (res.code === 200) {
-                    yield put({type: IndexActionTypes.SET_MESSAGE, msgContent: res, msgType: 1});
-                }
+        let res = yield call(saveTodo, request);
+        if (res) {
+            if (res.code === 200) {
+                yield put({type: IndexActionTypes.SET_MESSAGE, msgContent: res, msgType: 1});
             }
+        }
     }
 }

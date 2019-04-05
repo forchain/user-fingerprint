@@ -1,6 +1,6 @@
 import Fingerprint2 from "fingerprintjs2";
 
-export const getFingerprint = (callback) => {
+export const updateFingerprint = (callback) => {
     Fingerprint2.get(function (components) {
         // filter out unstable components
         components = components.filter((e) => {
@@ -9,10 +9,10 @@ export const getFingerprint = (callback) => {
         const currentFP = components.map(function (pair) {
             return pair.key + ':' + pair.value
         }).join('\n');
-        const fpID = Fingerprint2.x64hash128(currentFP, 31);
+        const fpId = Fingerprint2.x64hash128(currentFP, 31);
 
         const lastID = localStorage.getItem('FINGERPRINT_ID');
-        if (lastID != fpID) {
+        if (lastID != fpId) {
             const lastFP = localStorage.getItem('FINGERPRINT_COMPONENTS');
             if (lastID != null) {
                 const pairs = lastFP.split('\n');
@@ -28,10 +28,8 @@ export const getFingerprint = (callback) => {
                 }
             }
             localStorage.setItem('FINGERPRINT_COMPONENTS', currentFP);
-            localStorage.setItem('FINGERPRINT_ID', fpID);
+            localStorage.setItem('FINGERPRINT_ID', fpId);
         }
-        callback(fpID);
-        // actions.change_fingerprint(fpID);
+        callback(fpId);
     });
-
 };

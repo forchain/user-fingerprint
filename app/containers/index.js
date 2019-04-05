@@ -11,17 +11,18 @@ import style from './style.css';
 
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import * as indexActions from '../actions/indexAction';
+
+import {indexActions, userActions} from '../actions'
 
 import {userService} from '../services'
 
 class IndexApp extends Component {
 
     componentDidMount() {
-        const {actions} = this.props;
+        const {userActions} = this.props;
 
-        userService.getFingerprint((fpID) => {
-            actions.change_fingerprint(fpID);
+        userService.updateFingerprint((fpId) => {
+            userActions.change_fingerprint(fpId);
         })
     }
 
@@ -29,7 +30,7 @@ class IndexApp extends Component {
         return (
             <div>
                 <h1 className='app-page-title'>Todo Manager</h1>
-                <Fingerprint fingerprint={this.props.index.fingerprint}/>
+                <Fingerprint fingerprint={this.props.user.fingerprint}/>
                 <Router>
                     <Switch>
                         <Route exact path={'/'} component={Home}/>
@@ -44,13 +45,15 @@ class IndexApp extends Component {
 
 function mapStateToProps(state) {
     return {
-        index: state.index
+        index: state.index,
+        user: state.user
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        actions: bindActionCreators(indexActions, dispatch)
+        indexActions: bindActionCreators(indexActions, dispatch),
+        userActions: bindActionCreators(userActions, dispatch)
     }
 }
 

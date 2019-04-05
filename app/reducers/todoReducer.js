@@ -7,7 +7,7 @@ const initialState = {
     id: null,
     fingerprint: '0x00000000',
     todos: []
-}
+};
 
 export const todoReducer = (state = initialState, action) => {
     switch (action.type) {

@@ -24,14 +24,6 @@ class TodoManage extends Component {
         } else {
             actions.clear_todo_data();
         }
-
-        Fingerprint2.get(function (components) {
-            const fp = Fingerprint2.x64hash128(components.map(function (pair) {
-                return pair.value
-            }).join(), 31);
-            actions.change_fingerprint(fp);
-        });
-
     }
 
     changeName(event) {

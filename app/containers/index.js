@@ -18,14 +18,6 @@ import {userService} from '../services'
 
 class IndexApp extends Component {
 
-    componentDidMount() {
-        const {userActions} = this.props;
-
-        userService.updateFingerprint((fpId) => {
-            userActions.change_fingerprint(fpId);
-        })
-    }
-
     render() {
         return (
             <div>

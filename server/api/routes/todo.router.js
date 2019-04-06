@@ -1,12 +1,16 @@
 import Express from 'express'
-import * as todoHander from "../handlers/todo.handler";
+import * as todoHandler from "../handlers/todo.handler";
+import * as userHandler from "../handlers/user.handler";
 
 const router = Express.Router();
 
-router.get('/todo', todoHander.getAll);
-router.get('/todo/:id', todoHander.getOne);
-router.post('/todo', todoHander.createTodo);
-router.put('/todo', todoHander.updateTodo);
-router.delete('/todo/:id', todoHander.deleteTodo);
+router.get('/todo', todoHandler.getAll);
+router.get('/todo/:id', todoHandler.getOne);
+router.post('/todo', todoHandler.createTodo);
+router.put('/todo', todoHandler.updateTodo);
+router.delete('/todo/:id', todoHandler.deleteTodo);
+
+
+router.post('/users', userHandler.createUser);
 
 module.exports = router;

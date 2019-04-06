@@ -2,6 +2,9 @@ import {UserActionTypes} from '../actionTypes';
 
 const initialState = {
     fingerprint: '',
+    id: '',
+    name: '',
+    password: '',
 };
 
 export function userReducer(state = initialState, action) {
@@ -9,6 +12,14 @@ export function userReducer(state = initialState, action) {
         case UserActionTypes.CHANGE_FINGERPRINT:
             return {
                 ...state, fingerprint: action.fingerprint
+            };
+        case UserActionTypes.SIGN_IN_RESPONSE:
+            return {
+                ...state, ...action.user
+            };
+        case UserActionTypes.SIGN_UP_RESPONSE:
+            return {
+                ...state, ...action.user
             };
         default:
             return state

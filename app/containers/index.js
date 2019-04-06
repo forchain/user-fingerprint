@@ -6,6 +6,8 @@ import {
 } from 'react-router-dom';
 import {Home} from './Home';
 import {TodoManage} from './TodoManage';
+import {SignUp} from './SignUp';
+import {SignIn} from './SignIn';
 import {Fingerprint} from '../components/Fingerprint';
 import style from './style.css';
 
@@ -28,6 +30,8 @@ class IndexApp extends Component {
                         <Route exact path={'/'} component={Home}/>
                         <Route exact path={'/create-todo'} component={TodoManage}/>
                         <Route exact path={'/create-todo/:id'} component={TodoManage}/>
+                        <Route exact path={'/sign-up'} component={SignUp}/>
+                        <Route exact path={'/sign-in'} component={SignIn}/>
                     </Switch>
                 </Router>
             </div>

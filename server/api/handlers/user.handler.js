@@ -1,14 +1,22 @@
 import User from '../../../models/user';
 
 export const createUser = (req, res) => {
-    User.create({
-        username: req.body.username,
-        password: req.body.password,
-        fingerprint: req.headers.fingerprint,
-    }).then(user => res.send({
-        id: user._id,
-        username: user.username,
-    })).catch(err => res.end(err));
+    User.findOne({username: req.body.username})
+        .then(user => {
+            if (user) {
+                res.send({code: 1}) // registered
+            } else {
+                User.create({
+                    username: req.body.username,
+                    password: req.body.password,
+                    fingerprint: req.headers.fingerprint,
+                }).then(user => res.send({
+                    id: user._id,
+                    username: user.username,
+                })).catch(err => res.end(err));
+            }
+        }).catch(err => res.end(err));
+
 };
 
 export const signIn = (req, res) => {

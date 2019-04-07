@@ -33,7 +33,13 @@ export function* signUpFlow() {
     while (true) {
         let request = yield take(UserActionTypes.SIGN_UP);
         let res = yield call(saveUser, request.username, request.password);
-        yield put({type: UserActionTypes.SIGN_UP_RESPONSE, user: res || {}})
+        if (res) {
+            if (res.code === 1) {
+                yield put({type: IndexActionTypes.SET_MESSAGE, msgContent: "Username conflicts", msgType: 1});
+            } else {
+                yield put({type: UserActionTypes.SIGN_UP_RESPONSE, user: res })
+            }
+        }
     }
 }
 

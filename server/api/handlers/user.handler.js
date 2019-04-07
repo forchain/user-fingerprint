@@ -9,7 +9,7 @@ export const createUser = (req, res) => {
                 User.create({
                     username: req.body.username,
                     password: req.body.password,
-                    fingerprint: req.headers.fingerprint,
+                    fingerprint: req.body.fingerprint,
                 }).then(user => res.send({
                     id: user._id,
                     username: user.username,

@@ -4,5 +4,5 @@ module.exports = new mongoose.Schema({
     name: String,
     description: String,
     deadline: Date,
-    fingerprint: String
+    userid: String
 });

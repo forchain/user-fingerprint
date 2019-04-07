@@ -4,24 +4,11 @@ import {TodoActionTypes, IndexActionTypes, UserActionTypes} from '../actionTypes
 
 import {userService} from '../services'
 
-
-export function* getFingerprint() {
-    let fingerprint = yield select(state => {
-        return state.user.fingerprint
-    });
-    if (!fingerprint) {
-        fingerprint = yield call(userService.getFingerprintPromise);
-        yield put({type: UserActionTypes.CHANGE_FINGERPRINT, fingerprint})
-    }
-
-    return yield  fingerprint
-}
-
 export function* getTodoList() {
     yield put({type: IndexActionTypes.FETCH_START});
     try {
-        let fingerprint = yield call(getFingerprint);
-        return yield call(get, `/todo`, {headers: {fingerprint}});
+        let userid = yield call(userService.getId);
+        return yield call(get, `/todo`, {headers: {userid}});
     } catch (err) {
         yield put({type: IndexActionTypes.SET_MESSAGE, msgContent: "Can't Get Todo List", msgType: 0});
     } finally {
@@ -42,9 +29,8 @@ export function* getTodoListFlow() {
 export function* getTodo(id) {
     yield put({type: IndexActionTypes.FETCH_START});
     try {
-        let fingerprint = yield call(getFingerprint);
-
-        return yield call(get, `/todo/${id}`, {headers: {fingerprint}});
+        let userid = yield call(userService.getId);
+        return yield call(get, `/todo/${id}`, {headers: {userid}});
     } catch (err) {
         yield put({type: IndexActionTypes.SET_MESSAGE, msgContent: "Can't Get Todo List", msgType: 0});
     } finally {
@@ -66,9 +52,9 @@ export function* getTodoFlow() {
 export function* editTodo(id, name, description, deadline) {
     yield put({type: IndexActionTypes.FETCH_START});
     try {
-        let fingerprint = yield call(getFingerprint);
         let data = {id, name, description, deadline};
-        return yield call(update, `/todo`, data, {headers: {fingerprint}});
+        let userid = yield call(userService.getId);
+        return yield call(update, `/todo`, data, {headers: {userid}});
     } catch (err) {
         yield put({type: IndexActionTypes.SET_MESSAGE, msgContent: "Can't Get Todo List", msgType: 0});
     } finally {
@@ -89,8 +75,8 @@ export function* editTodoFlow() {
 export function* deleteTodo(id) {
     yield put({type: IndexActionTypes.FETCH_START});
     try {
-        let fingerprint = yield call(getFingerprint);
-        return yield call(remove, `/todo/${id}`, {headers: {fingerprint}});
+        let userid = yield call(userService.getId);
+        return yield call(remove, `/todo/${id}`, {headers: {userid}});
     } catch (err) {
         yield put({type: IndexActionTypes.SET_MESSAGE, msgContent: "Can't Delete Todo", msgType: 0});
     } finally {
@@ -115,12 +101,13 @@ export function* saveTodo(data) {
         let id = yield select(state => {
             state.id
         });
-        let fingerprint = yield call(getFingerprint);
+
+        let userid = yield call(userService.getId);
         if (id) {
             data.id = id;
-            return yield call(put, '/todo', data, {headers: {fingerprint}});
+            return yield call(put, '/todo', data, {headers: {userid}});
         } else {
-            return yield call(post, '/todo', data, {headers: {fingerprint}});
+            return yield call(post, '/todo', data, {headers: {userid}});
         }
 
     } catch (err) {

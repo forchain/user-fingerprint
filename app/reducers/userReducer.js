@@ -3,7 +3,7 @@ import {UserActionTypes} from '../actionTypes';
 const initialState = {
     fingerprint: '',
     id: '',
-    name: '',
+    username: '',
     password: '',
 };
 

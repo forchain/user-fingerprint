@@ -1,5 +1,8 @@
 import Fingerprint2 from "fingerprintjs2";
 
+import {take, call, put, select} from 'redux-saga/effects';
+import {TodoActionTypes, IndexActionTypes, UserActionTypes} from '../actionTypes';
+
 export const getFingerprintPromise = () => new Promise(resolve => Fingerprint2.get(function (components) {
         // filter out unstable components
         components = components.filter((e) => {
@@ -33,3 +36,23 @@ export const getFingerprintPromise = () => new Promise(resolve => Fingerprint2.g
     })
 );
 
+
+export function* getId() {
+    let id = yield select(state => {
+        return state.user.id
+    });
+
+    return yield id
+}
+
+export function* getFingerprint() {
+    let fingerprint = yield select(state => {
+        return state.user.fingerprint
+    });
+    if (!fingerprint) {
+        fingerprint = yield call(getFingerprintPromise);
+        yield put({type: UserActionTypes.CHANGE_FINGERPRINT, fingerprint})
+    }
+
+    return yield  fingerprint
+}

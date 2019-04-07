@@ -4,24 +4,13 @@ import {TodoActionTypes, IndexActionTypes, UserActionTypes} from '../actionTypes
 
 import {userService} from '../services'
 
-export function* getFingerprint() {
-    let fingerprint = yield select(state => {
-        return state.user.fingerprint
-    });
-    if (!fingerprint) {
-        fingerprint = yield call(userService.getFingerprintPromise);
-        yield put({type: UserActionTypes.CHANGE_FINGERPRINT, fingerprint})
-    }
-
-    return yield  fingerprint
-}
-
 export function* saveUser(username, password) {
     yield put({type: IndexActionTypes.FETCH_START});
     try {
-        let fingerprint = yield call(getFingerprint);
-        let data = {username, password};
-        return yield call(post, '/users', data, {headers: {fingerprint}});
+        let fingerprint = yield call(userService.getFingerprint);
+        let data = {username, password, fingerprint};
+        let userid = yield call(userService.getId);
+        return yield call(post, '/users', data, {headers: {userid}});
     } catch (err) {
         yield put({type: IndexActionTypes.SET_MESSAGE, msgContent: "Can't Save Todo", msgType: 0});
     } finally {
@@ -37,7 +26,7 @@ export function* signUpFlow() {
             if (res.code === 1) {
                 yield put({type: IndexActionTypes.SET_MESSAGE, msgContent: "Username conflicts", msgType: 1});
             } else {
-                yield put({type: UserActionTypes.SIGN_UP_RESPONSE, user: res })
+                yield put({type: UserActionTypes.SIGN_UP_RESPONSE, user: res})
             }
         }
     }
@@ -63,7 +52,7 @@ export function* signInFlow() {
             if (res.code === 1) {
                 yield put({type: IndexActionTypes.SET_MESSAGE, msgContent: "No User", msgType: 1});
             } else {
-                let fingerprint = yield call(getFingerprint);
+                let fingerprint = yield call(userService.getFingerprint);
                 if (res.user.fingerprint === fingerprint) {
                     yield put({type: UserActionTypes.SIGN_IN_RESPONSE, user: {...res.user}})
                 } else {

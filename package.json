@@ -1,7 +1,7 @@
 {
-  "name": "react-expres-boilprate",
+  "name": "user-fingerprint",
   "version": "0.0.1",
-  "description": "A React Express Mongo Boilerplate to get started to development.",
+  "description": "Use browser fingerprint to track users and limit them to use online services in authorized devices",
   "main": "index.jsx",
   "scripts": {
     "watch-client": "cross-env NODE_ENV=development node  ./server/index.js",
@@ -9,13 +9,14 @@
     "start-dev-api": "nodemon --inspect --watch server/api server/api/bin/index.js",
     "start": "npm run watch-client & npm run start-dev-api"
   },
-  "author": "Vladimir Grigoryan",
+  "author": "Tony Zhou",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/codeep/React-Express-Boilerplate"
+    "url": "https://github.com/forchain/user-fingerprint"
   },
   "keywords": [
+    "browser fingerprint",
     "react",
     "redux",
     "react-redux",
@@ -29,7 +30,7 @@
     "babel",
     "webpack"
   ],
-  "homepage": "https://github.com/codeep/React-Express-Boilerplate",
+  "homepage": "https://github.com/forchain/user-fingerprint",
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",

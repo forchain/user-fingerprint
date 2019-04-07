@@ -1,6 +1,12 @@
-# REACT EXPRESS Boilerplate
+# Proof-of-concept for data protection using browser fingerprint
 
-This is a sophisticated boilerplate that uses React on front-end and Node.js (Express) on back-end.
+
+**A course project for COE 531 Advanced Software Engineering, Spring 2019, AUS**
+
+This project is using [browser fingerprint](https://en.wikipedia.org/wiki/Device_fingerprint) to track users, so that users have to use their online services in an authorized device, which would prevent the users from share their subscriptions with non-subscribed users.
+
+------
+This project is built based on a sophisticated [boilerplate](https://github.com/codeep/React-Express-Boilerplate) that uses React on front-end and Node.js (Express) on back-end.
 
 This boilerplate is empowered by the following technologies:
 • Redux  
@@ -22,11 +28,11 @@ Follow the steps below to get started using this boilerplate for your project!
 
 First, clone the repository via git:
 ```bash
-$ git clone https://github.com/codeep/React-Express-Boilerplate.git
+$ git clone https://github.com/forchain/user-fingerprint.git
 ```
 Then, install dependencies using npm.
 ```bash
-$ cd React-Express-Boilerplate
+$ cd user-fingerprint
 $ npm install
 ```
 ## Run

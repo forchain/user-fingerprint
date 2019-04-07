@@ -2,10 +2,11 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {withRouter} from 'react-router-dom';
-import * as todoActions from '../../actions/todoActions';
+import {indexActions, todoActions} from '../../actions';
 import {TodoForm} from '../../components/TodoForm';
 
 class TodoManage extends Component {
+
     constructor(props) {
         super(props);
         this.addTodo = this.addTodo.bind(this);
@@ -15,38 +16,40 @@ class TodoManage extends Component {
     }
 
     componentDidMount() {
-        const {match, actions} = this.props;
+        const {match} = this.props;
         const {id} = match.params;
         if (id) {
-            actions.get_todo_by_id(id);
+            this.props.todoActions.get_todo_by_id(id);
+            this.props.indexActions.set_title('Edit ToDo');
         } else {
-            actions.clear_todo_data();
+            this.props.todoActions.clear_todo_data();
+            this.props.indexActions.set_title('Create ToDo');
         }
     }
 
     changeName(event) {
-        const {actions} = this.props;
-        actions.change_todo_name(event.target.value);
+        const {todoActions} = this.props;
+        todoActions.change_todo_name(event.target.value);
     }
 
     changeDescription(event) {
-        const {actions} = this.props;
-        actions.change_todo_description(event.target.value);
+        const {todoActions} = this.props;
+        todoActions.change_todo_description(event.target.value);
     }
 
     changeDeadline(time) {
-        const {actions} = this.props;
-        actions.change_todo_deadline(time);
+        const {todoActions} = this.props;
+        todoActions.change_todo_deadline(time);
     }
 
     addTodo(event) {
-        const {actions, history, todo} = this.props;
+        const {todoActions, history, todo} = this.props;
         const {name, description, deadline, id} = todo;
 
         event.preventDefault();
         todo.id
-            ? actions.edit_todo(name, description, deadline, id)
-            : actions.create_todo(name, description, deadline);
+            ? todoActions.edit_todo(name, description, deadline, id)
+            : todoActions.create_todo(name, description, deadline);
         history.push('/');
     }
 
@@ -74,7 +77,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        actions: bindActionCreators(todoActions, dispatch)
+        todoActions: bindActionCreators(todoActions, dispatch),
+        indexActions: bindActionCreators(indexActions, dispatch),
     }
 }
 

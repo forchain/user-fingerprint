@@ -7,4 +7,11 @@ export const clear_message = () => {
     }
 };
 
+export const set_title = (title) => {
+    return {
+        type: actionTypes.SET_TITLE,
+        title,
+    }
+};
+
 

@@ -6,9 +6,7 @@ import {
 } from 'react-router-dom';
 import {Home} from './Home';
 import {TodoManage} from './TodoManage';
-import {SignUp} from './SignUp';
-import {SignIn} from './SignIn';
-import {Fingerprint} from '../components/Fingerprint';
+import {Sign} from './Sign';
 import style from './style.css';
 
 import {connect} from 'react-redux';
@@ -20,6 +18,8 @@ import {userService} from '../services'
 import {PrivateRoute} from '../components/PrivateRoute';
 import {MessageDialog} from '../components/MessageDialog';
 
+import {AppBar, Paper, Drawer, MenuItem} from 'material-ui'
+import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 
 class IndexApp extends Component {
 
@@ -27,49 +27,83 @@ class IndexApp extends Component {
         super(props);
 
         this.handleDialogClose = this.handleDialogClose.bind(this);
+        this.handleToggleNavigation = this.handleToggleNavigation.bind(this);
+
+        this.state = {
+            navigationOpen: false,
+        }
     }
 
     handleDialogClose() {
         this.props.indexActions.clear_message();
     }
 
+    handleToggleNavigation() {
+
+        this.setState({navigationOpen: !this.state.navigationOpen})
+    }
+
     render() {
         const {msg} = this.props.index;
-        const authenticated = !!this.props.user.id;
+        const {user, index} = this.props;
+        const authenticated = !!user.id;
         return (
-            <div>
-                <h1 className='app-page-title'>Todo Manager</h1>
-                <Fingerprint fingerprint={this.props.user.fingerprint}/>
-                <MessageDialog
-                    title="Attention"
-                    open={msg != null}
-                    onRequestClose={this.handleDialogClose}
-                    message={msg && msg.content}
+            <Paper>
+                <AppBar
+                    title={index.title}
+                    iconClassNameRight="muidocs-icon-navigation-expand-more"
+                    onLeftIconButtonClick={this.handleToggleNavigation}
                 />
-                < Router>
-                    < Switch>
-                        < Route
-                            authenticated={authenticated}
-                            exact
-                            path={'/'}
-                            component={Home}
+                <Card>
+                    {user.id &&
+                    <CardTitle title={user.username} subtitle={user.fingerprint}/>
+                    }
+                    <CardText>
+                        <MessageDialog
+                            title="Attention"
+                            open={msg != null}
+                            onRequestClose={this.handleDialogClose}
+                            message={msg && msg.content}
                         />
-                        <Route authenticated={authenticated} exact path={'/create-todo'} component={TodoManage}/>
-                        < Route
-                            authenticated={authenticated}
-                            exact
-                            path={'/create-todo/:id'}
-                            component={TodoManage}
-                        />
-                        <Route exact path={'/sign-up'} component={SignUp}/>
-                        < Route
-                            exact
-                            path={'/sign-in'}
-                            component={SignUp}
-                        />
-                    </Switch>
+                        < Router>
+                            <div>
+                                < Switch>
+                                    <PrivateRoute
+                                        authenticated={authenticated}
+                                        exact
+                                        path={'/'}
+                                        component={Home}
+                                    />
+                                    <PrivateRoute authenticated={authenticated} exact path={'/create-todo'}
+                                                  component={TodoManage}/>
+                                    <PrivateRoute
+                                        authenticated={authenticated}
+                                        exact
+                                        path={'/create-todo/:id'}
+                                        component={TodoManage}
+                                    />
+                                    <Route exact path={'/sign-up'} component={Sign}/>
+                                    <Route
+                                        exact
+                                        path={'/sign-in'}
+                                        component={Sign}
+                                    />
+                                </Switch>
+
+                                <Drawer docked={false} open={this.state.navigationOpen}
+                                        onRequestChange={(open) => this.setState({navigationOpen: open})}>
+                                    <MenuItem><a href={'/'}>Home</a></MenuItem>
+                                    <MenuItem><a href={'/sign-in'}>Sign In</a></MenuItem>
+                                    <MenuItem><a href={'/sign-up'}>Sign Up</a></MenuItem>
+                                </Drawer>
+                            </div>
+                        </Router>
+                    </CardText>
+                </Card>
+                <Router>
                 </Router>
-            </div>
+
+            </Paper>
         )
     }
 }

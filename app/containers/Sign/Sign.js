@@ -6,35 +6,40 @@ import {withRouter} from 'react-router-dom';
 
 import {SignUpForm} from '../../components/SignUpForm'
 
-import {userActions} from '../../actions';
+import {userActions, indexActions} from '../../actions';
 
 import {Redirect} from 'react-router-dom';
 
 
-class SignUp extends Component {
+class Sign extends Component {
+
+    // actions = this.props.actions;
+
     constructor(props) {
         super(props);
 
-        this.signUp = this.signUp.bind(this);
+        this.sign = this.sign.bind(this);
 
-        this.state = {
-            signType: 'up'
-        }
+        this.state = {isUp: false}
     }
 
     componentDidMount() {
         const {match} = this.props;
-        if (match.path === '/sign-in') {
-            this.setState({signType: 'in'})
+        const isUp = match.path === '/sign-up';
+        this.setState({isUp});
+
+        if (isUp) {
+            this.props.indexActions.set_title('Sign Up')
+        } else {
+            this.props.indexActions.set_title('Sign In')
         }
     }
 
-    signUp(username, password) {
-        const {actions} = this.props;
-        if (this.state.signType === 'up') {
-            actions.sign_up(username, password);
+    sign(username, password) {
+        if (this.state.isUp) {
+            this.props.userActions.sign_up(username, password);
         } else {
-            actions.sign_in(username, password);
+            this.props.userActions.sign_in(username, password);
         }
     }
 
@@ -47,7 +52,7 @@ class SignUp extends Component {
                     <Redirect to={{pathname: '/', state: {from: this.props.location}}}/>
                 ) : (
                     <div>
-                        <SignUpForm onFormSubmit={this.signUp} type={this.state.signType}/>
+                        <SignUpForm onFormSubmit={this.sign} isUp={this.state.isUp}/>
                     </div>
                 )}
             </div>
@@ -64,11 +69,12 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        actions: bindActionCreators(userActions, dispatch)
+        indexActions: bindActionCreators(indexActions, dispatch),
+        userActions: bindActionCreators(userActions, dispatch)
     }
 }
 
 export default withRouter(connect(
     mapStateToProps,
     mapDispatchToProps
-)(SignUp));
+)(Sign));

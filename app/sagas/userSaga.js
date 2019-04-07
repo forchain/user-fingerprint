@@ -40,14 +40,11 @@ export function* signUpFlow() {
 export function* signIn(username, password) {
     yield put({type: IndexActionTypes.FETCH_START});
     try {
-        console.warn('8');
         let data = {username, password};
         return yield call(post, '/sessions', data);
     } catch (err) {
-        console.warn('6');
         yield put({type: IndexActionTypes.SET_MESSAGE, msgContent: "Can't Save Todo", msgType: 0});
     } finally {
-        console.warn('7');
         yield put({type: IndexActionTypes.FETCH_END})
     }
 }

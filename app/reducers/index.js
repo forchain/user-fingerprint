@@ -6,6 +6,7 @@ import {IndexActionTypes} from '../actionTypes';
 const initialState = {
     isFetching: true,
     msg: null,
+    title: 'ToDo Manager',
 };
 
 export function reducer(state = initialState, action) {
@@ -30,6 +31,10 @@ export function reducer(state = initialState, action) {
         case IndexActionTypes.CLEAR_MESSAGE:
             return {
                 ...state, msg: null
+            };
+        case IndexActionTypes.SET_TITLE:
+            return {
+                ...state, title: action.title,
             };
         default:
             return state

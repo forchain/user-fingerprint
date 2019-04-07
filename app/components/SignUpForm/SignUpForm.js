@@ -41,38 +41,36 @@ class SignUpForm extends PureComponent {
     render() {
         return (
             <div>
-                <Paper className='paper'>
-                    <form onSubmit={this.handleSubmit}>
-                        <div>
-                            <TextField hintText="User Name" required onChange={this.handleUsernameChange}
-                                       underlineShow={false} fullWidth={false}/>
-                        </div>
+                <form onSubmit={this.handleSubmit}>
+                    <div>
+                        <TextField hintText="User Name" required onChange={this.handleUsernameChange}
+                                   underlineShow={false} fullWidth={false}/>
+                    </div>
 
-                        <div>
-                            <TextField hintText="Password" required type="password" onChange={this.handlePasswordChange}
-                                       underlineShow={false} fullWidth={false}/>
-                        </div>
-                        <div>
-                            {this.props.type === 'up' ? (
-                                <span>
+                    <div>
+                        <TextField hintText="Password" required type="password" onChange={this.handlePasswordChange}
+                                   underlineShow={false} fullWidth={false}/>
+                    </div>
+                    <div>
+                        {this.props.isUp ? (
+                            <span>
                                     <RaisedButton label="Sign Up" primary={true} type="submit"/>
-                                    {/*<Link to="/sign-in">*/}
-                                    {/*    <FlatButton label="Sign In" secondary={true}/>*/}
-                                    {/*</Link>*/}
-                                    <a href={'/sign-in'}><FlatButton label="Sign In" secondary={true}/></a>
+                                {/*<Link to="/sign-in">*/}
+                                {/*    <FlatButton label="Sign In" secondary={true}/>*/}
+                                {/*</Link>*/}
+                                <a href={'/sign-in'}><FlatButton label="Sign In" secondary={true}/></a>
                                 </span>
-                            ) : (
-                                <span>
+                        ) : (
+                            <span>
                                     <RaisedButton label="Sign In" primary={true} type="submit"/>
-                                    {/*<Link to="/sign-up">*/}
-                                    {/*    <FlatButton label="Sign Up" secondary={true}/>*/}
-                                    {/*</Link>*/}
-                                    <a href={'/sign-up'}><FlatButton label="Sign Up" secondary={true}/></a>
+                                {/*<Link to="/sign-up">*/}
+                                {/*    <FlatButton label="Sign Up" secondary={true}/>*/}
+                                {/*</Link>*/}
+                                <a href={'/sign-up'}><FlatButton label="Sign Up" secondary={true}/></a>
                                 </span>
-                            )}
-                        </div>
-                    </form>
-                </Paper>
+                        )}
+                    </div>
+                </form>
             </div>
         )
     }

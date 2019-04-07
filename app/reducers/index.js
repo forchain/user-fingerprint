@@ -4,7 +4,8 @@ import {combineReducers} from 'redux';
 import {IndexActionTypes} from '../actionTypes';
 
 const initialState = {
-    isFetching: true
+    isFetching: true,
+    msg: null,
 };
 
 export function reducer(state = initialState, action) {
@@ -25,6 +26,10 @@ export function reducer(state = initialState, action) {
                     type: action.msgType,
                     content: action.msgContent
                 }
+            };
+        case IndexActionTypes.CLEAR_MESSAGE:
+            return {
+                ...state, msg: null
             };
         default:
             return state

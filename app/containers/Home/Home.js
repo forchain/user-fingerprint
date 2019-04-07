@@ -1,23 +1,38 @@
-import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
-import { AddButton } from '../../components/AddButton';
-import { TodoList } from '../TodoList';
+import React, {Component} from 'react';
+import {withRouter} from 'react-router-dom';
+import {AddButton} from '../../components/AddButton';
+import {TodoList} from '../TodoList';
+
+import {connect} from 'react-redux';
 
 class Home extends Component {
 
-  addTodo = () => {
-    const { history } = this.props;
-    history.push('/create-todo')
-  }
+    constructor(props) {
+        super(props);
+    }
 
-  render() {
-    return (
-      <div>
-        <TodoList />
-        <AddButton addButtonHandler={this.addTodo} />
-      </div>
-    )
-  }
+    addTodo = () => {
+        const {history} = this.props;
+        history.push('/create-todo')
+    };
+
+    render() {
+        return (
+            <div>
+                <TodoList/>
+                <AddButton addButtonHandler={this.addTodo}/>
+            </div>
+        )
+    }
 }
 
-export default withRouter(Home);
+
+function mapStateToProps(state) {
+    return {
+        user: state.user
+    }
+}
+
+export default withRouter(connect(
+    mapStateToProps,
+)(Home));

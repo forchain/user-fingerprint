@@ -12,5 +12,6 @@ router.delete('/todo/:id', todoHandler.deleteTodo);
 
 
 router.post('/users', userHandler.createUser);
+router.post('/sessions', userHandler.signIn);
 
 module.exports = router;

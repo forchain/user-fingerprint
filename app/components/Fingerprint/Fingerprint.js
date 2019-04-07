@@ -9,7 +9,10 @@ class Fingerprint extends PureComponent {
     render() {
         return (
             <h2>
-                Fingerprint: {this.props.fingerprint}
+                {this.props.fingerprint &&
+                <span> Fingerprint: {this.props.fingerprint}                </span>
+                }
+
             </h2>
         )
     }

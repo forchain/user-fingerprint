@@ -15,7 +15,8 @@ const allowCrossDomain = function (req, res, next) {
 
     next();
 };
-app.use(allowCrossDomain);
+// could disable cross domain if we are using proxy like NGINX
+// app.use(allowCrossDomain);
 
 // forward all requests starting with /api/ to /
 app.use('/api', (req, res) => {

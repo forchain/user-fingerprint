@@ -75,9 +75,10 @@ module.exports = {
         new webpack.optimize.CommonsChunkPlugin({
             name: "manifest"
         }),
-        new OpenBrowserPlugin({
-            url: `http://${config.host}:${config.port}`
-        })
+        // annoying, disabled
+        // new OpenBrowserPlugin({
+        //     url: `http://${config.host}:${config.port}`
+        // })
     ],
     resolve: {
         extensions: ['.js', '.json', '.sass', '.scss', '.css', 'jsx']

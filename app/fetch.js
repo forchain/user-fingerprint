@@ -5,7 +5,7 @@ const requestUrl = `${appConfig.host}`;
 const requestPort = `${appConfig.port}`;
 
 let config = {
-    baseURL: `http://${requestUrl}:${requestPort}/api`,
+    baseURL: `/api`,
     transformRequest: [
         (data) => {
             let ret = '';

@@ -1,11 +1,11 @@
 import axios from 'axios'
 import appConfig from '../config';
 
-const requestUrl = `${appConfig.apiHost}`;
-const requestPort = `${appConfig.apiPort}`;
+const requestUrl = `${appConfig.host}`;
+const requestPort = `${appConfig.port}`;
 
 let config = {
-    baseURL: 'http://127.0.0.1:3001/api',
+    baseURL: `http://${requestUrl}:${requestPort}/api`,
     transformRequest: [
         (data) => {
             let ret = '';

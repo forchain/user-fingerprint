@@ -7,24 +7,34 @@ import config from '../config';
 const app = new Express();
 const port = config.port;
 
-app.use('/api',(req,res) => {
+//CORS middleware
+const allowCrossDomain = function (req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    // res.header('Access-Control-Allow-Methods', 'OPTIONS,GET,PUT,POST,DELETE');
+    // res.header('Access-Control-Allow-Headers', 'Content-Type');
+
+    next();
+};
+app.use(allowCrossDomain);
+
+// forward all requests starting with /api/ to /
+app.use('/api', (req, res) => {
     proxy.web(req, res, {target: `${targetUrl}`})
 });
 
 
 app.use('/', connectHistoryApiFallback());
-app.use('/',Express.static(path.join(__dirname,"..",'build')));
-app.use('/',Express.static(path.join(__dirname,"..",'static')));
+app.use('/', Express.static(path.join(__dirname, "..", 'build')));
+app.use('/', Express.static(path.join(__dirname, "..", 'static')));
 
 
 const targetUrl = `http://${config.apiHost}:${config.apiPort}`;
 const proxy = httpProxy.createProxyServer({
-    target:targetUrl
+    target: targetUrl
 });
 
 
-
-if(process.env.NODE_EVN !== 'production') {
+if (process.env.NODE_EVN !== 'production') {
     const Webpack = require('webpack');
     const WebpackDevMiddleware = require('webpack-dev-middleware');
     const WebpackHotMiddleware = require('webpack-hot-middleware');
@@ -45,9 +55,9 @@ if(process.env.NODE_EVN !== 'production') {
 }
 
 app.listen(port, (err) => {
-    if(err) {
-      console.error("The following error has occurred while trying to start the server: ", err)
+    if (err) {
+        console.error("The following error has occurred while trying to start the server: ", err)
     } else {
-      console.log(`===> open http://${config.host}:${config.port} in a browser to view the app`);
+        console.log(`===> open http://${config.host}:${config.port} in a browser to view the app`);
     }
 });

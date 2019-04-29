@@ -192,7 +192,7 @@ It hashes the processed data to produce a unique identifier
 ## Test Cases
 Test cases for an implementation are mandatory in most case. it can choose to include links to test cases if applicable.
 
-### ClientJS[[5]](https://github.com/jackspirou/clientjs)
+### ClientJS[[6]](https://github.com/jackspirou/clientjs)
 ClientJS is a JavaScript library that makes digital fingerprinting easy, while also exposing all the browser data-points used in generating fingerprints.
 
 #### data-points
@@ -212,3 +212,13 @@ ClientJS is a JavaScript library that makes digital fingerprinting easy, while a
 * system language
 * cookies
 * canvas print
+
+## References:
+```
+[1] https://en.wikipedia.org/wiki/Device_fingerprint
+[2] https://pixelprivacy.com/resources/browser-fingerprinting/
+[3]https://github.com/codeep/React-Express-Boilerplate
+[4]https://github.com/Valve/fingerprintjs2
+[5]https://www.thesecuritybuddy.com/data-breaches-prevention/what-is-device-fingerprinting/2/
+[6]https://github.com/jackspirou/clientjs
+```

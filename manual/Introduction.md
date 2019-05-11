@@ -3,15 +3,26 @@
 ## Abstract
 User-fingerprint is an on-the-fly proof-of-concept project to demonstrate how to make use of browser ﬁngerprint in order to identify a user and limit his accessibility only in one machine so that he won't be able to share his one-user license to an unsubscribed user.
 
-## Motivation
+## Problem Statement
 Our data is valuable and we may live with if it gets enough protection so we have full control of it. However, in a digital world, the cost of making a copy of data is negligible. So, we need to protect our data from being misused by a wrong hand. Device fingerprint is a solution to identify a user by collecting necessary information from client remoting computing devices. Browser fingerprint is a branch of device fingerprint and is getting more and more prevailing since browser could be cross-platform and can be accessed by any devices. However, browser fingerprint is also facing much more challenges than other device fingerprint approaches because of no native accessibility.
 
-## Terminology
+![Proposal](images/Proposal.png)
+> Why Fingerprint?
+---
+
+## Engineering Design
+### Architecture
+
+![Architecture](images/architecture.png)
+> System Architecture[7]
+---
+
+### Terminology
 The technical specification should describe the syntax and semantics of any new feature. 
-### Device Fingerprint[[1]](https://en.wikipedia.org/wiki/Device_fingerprint)
+#### Device Fingerprint[[1]](https://en.wikipedia.org/wiki/Device_fingerprint)
 A device fingerprint, machine fingerprint, or browser fingerprint is information collected about a remote computing device for the purpose of identification. Fingerprints can be used to fully or partially identify individual users or devices even when persistent cookies (and also zombie cookies) can't be read or stored in the browser, the client IP address is hidden, and even if one switches to another browser on the same device. This may allow a remote application to detect and prevent online identity theft and credit card fraud, but also to compile long-term records of individuals' browsing histories even when they're attempting to avoid tracking, raising a major concern for internet privacy advocates.
 
-### Browser Fingerprint[[2]](https://pixelprivacy.com/resources/browser-fingerprinting/)
+#### Browser Fingerprint[[2]](https://pixelprivacy.com/resources/browser-fingerprinting/)
 Browser fingerprinting is a powerful method that websites use to collect information about your browser type and version, as well as your operating system, active plugins, timezone, language, screen resolution and various other active settings. Websites use the information provided by browsers to identify unique users and track their online behaviour.
 
 ### Characteristic[[5]](https://www.thesecuritybuddy.com/data-breaches-prevention/what-is-device-fingerprinting/2/)
@@ -43,37 +54,53 @@ Browser fingerprinting is a powerful method that websites use to collect informa
 
     Device Fingerprinting solution should be able to effectively protect against first-time fraud attempts. It can be done by looking at a number of factors like whether the device is hiding its IP, location or Geo, whether the device is compromised by malware or part of a botnet etc.
 
-## Performance analysis
-The browser has many advantages, like cross-platform, no native installation requirement, also,  there are some disadvantages, for example, the biggest problems lies in that it has little accuracy than native device fingerprint. To be more formal, we use the characteristics to evaluate its performance
-1.  Uniqueness
+## Implementation
+### Boilerplate[[3]](https://github.com/codeep/React-Express-Boilerplate)
+This project is built based on a sophisticated boilerplate that uses React on front-end and Node.js (Express) on the back-end.
 
-Browser API is really hard to read a uniqueness number since some device identifier like MAC ID needs native permission. So, the current solution is using multiple parameters combined to reduce the probability that two machines with their fingerprint collide.
+This boilerplate is empowered by the following technologies: 
 
-2. Persistence
-Browser API is so sensitive with parameters change, even a slight reasonable one will make the fingerprint totally different and fail the identification. So, we need to separate those reasonable from those unreasonable, for instance, a fingerprint is using user-agent, which contains a browser version. So, once browser upgraded, the fingerprint will not work any more. So, in future work, we will make the detection more compatible with those sensitive data points.
+* Redux
+* Redux-saga
+* Mongoose
+* Material-UI
+* Moment
 
-3.  Resistance
+It's a usable CRUD (Create, Read, Update, Delete) app, using todo-s to illustrate that.
 
-HTML, CSS, DOM javascript are easy to be manipulated, so resistance is not so strong. In future, we would add more parameters, even integrate a local proxy, to increase the difficulties for the fingerprint to be tempered with.
+Follow the steps below to get started using this boilerplate for your project!
 
-4. Integration 
+### FingerprintJS2[[4]](https://github.com/Valve/fingerprintjs2)
+Fingerprint.js collects all the unique features from a device/browser passing them through a hash function to provide a unique identifier.
 
-Browser fingerprint has strong integration advantages, all done by browsers.
+#### 1. Collection
+It collects the unique features from a browser via the client JS
+#### 2. Processing
+It processes all collected data to normalize any minor changes
+#### 3. Hashing
+It hashes the processed data to produce a unique identifier
+### ClientJS[[6]](https://github.com/jackspirou/clientjs)
+ClientJS is a JavaScript library that makes digital fingerprinting easy, while also exposing all the browser data-points used in generating fingerprints.
 
-5. Zero Impack
+#### data-points
+* user agent
+* screen print
+* color depth
+* current resolution
+* available resolution
+* device XDPI
+* device YDPI
+* plugin list
+* font list
+* local storage
+* session storage
+* timezone
+* language
+* system language
+* cookies
+* canvas print
 
-Also a strong advantage, they are just ordinary websites from the browsers' perspective. No harm to devices.
-
-6. No Delay
-
-It depends on which parameters calculated, generally, it is fast. For this case, ClientJS computes fast so that we could not beware of the fingerprint computation.
-
-7. First-time Fraud Detection
-Yes in this case. The system only generates the fingerprint on the registration is done.
-
-Sum up, the system needs more Uniqueness, Persistence, Resistance, and I will reinforce those in future work.
-
-## Use Cases
+## Experiment
 [User-fingerprint](https://github.com/forchain/user-fingerprint), a proof-of-concept project to demonstrate how to make use of browser fingerprint in order to identify a user and limit his accessibility only in one machine, so that he won't be able to share his one-user license to an unsubscribed user.      
 
 ### Live Demo
@@ -165,60 +192,42 @@ Did you recall that we used the Chrome browser to simulate UAE device whereas Fi
 > Failed to login China User in UAE due to the fingerprint detection
 ---
 
+### Performance analysis
+The browser has many advantages, like cross-platform, no native installation requirement, also,  there are some disadvantages, for example, the biggest problems lies in that it has little accuracy than native device fingerprint. To be more formal, we use the characteristics to evaluate its performance
+1.  Uniqueness
 
-## Implementation
-### Boilerplate[[3](https://github.com/codeep/React-Express-Boilerplate)
-This project is built based on a sophisticated boilerplate that uses React on front-end and Node.js (Express) on the back-end.
+Browser API is really hard to read a uniqueness number since some device identifier like MAC ID needs native permission. So, the current solution is using multiple parameters combined to reduce the probability that two machines with their fingerprint collide.
 
-This boilerplate is empowered by the following technologies: • Redux
-* Redux-saga
-* Mongoose
-* Material-UI
-* Moment
+2. Persistence
+Browser API is so sensitive with parameters change, even a slight reasonable one will make the fingerprint totally different and fail the identification. So, we need to separate those reasonable from those unreasonable, for instance, a fingerprint is using user-agent, which contains a browser version. So, once browser upgraded, the fingerprint will not work any more. So, in future work, we will make the detection more compatible with those sensitive data points.
 
-It's a usable CRUD (Create, Read, Update, Delete) app, using todo-s to illustrate that.
+3.  Resistance
 
-Follow the steps below to get started using this boilerplate for your project!
+HTML, CSS, DOM javascript are easy to be manipulated, so resistance is not so strong. In future, we would add more parameters, even integrate a local proxy, to increase the difficulties for the fingerprint to be tempered with.
 
-### FingerprintJS2[[4]](https://github.com/Valve/fingerprintjs2)
-Fingerprint.js collects all the unique features from a device/browser passing them through a hash function to provide a unique identifier.
+4. Integration 
 
-#### 1. Collection
-It collects the unique features from a browser via the client JS
-#### 2. Processing
-It processes all collected data to normalize any minor changes
-#### 3. Hashing
-It hashes the processed data to produce a unique identifier
-## Test Cases
-Test cases for an implementation are mandatory in most case. it can choose to include links to test cases if applicable.
+Browser fingerprint has strong integration advantages, all done by browsers.
 
-### ClientJS[[6]](https://github.com/jackspirou/clientjs)
-ClientJS is a JavaScript library that makes digital fingerprinting easy, while also exposing all the browser data-points used in generating fingerprints.
+5. Zero Impack
 
-#### data-points
-* user agent
-* screen print
-* color depth
-* current resolution
-* available resolution
-* device XDPI
-* device YDPI
-* plugin list
-* font list
-* local storage
-* session storage
-* timezone
-* language
-* system language
-* cookies
-* canvas print
+Also a strong advantage, they are just ordinary websites from the browsers' perspective. No harm to devices.
 
+6. No Delay
+
+It depends on which parameters calculated, generally, it is fast. For this case, ClientJS computes fast so that we could not beware of the fingerprint computation.
+
+7. First-time Fraud Detection
+Yes in this case. The system only generates the fingerprint on the registration is done.
+
+Sum up, the system needs more Uniqueness, Persistence, Resistance, and I will reinforce those in future work.
 ## References:
 ```
 [1] https://en.wikipedia.org/wiki/Device_fingerprint
 [2] https://pixelprivacy.com/resources/browser-fingerprinting/
-[3]https://github.com/codeep/React-Express-Boilerplate
-[4]https://github.com/Valve/fingerprintjs2
-[5]https://www.thesecuritybuddy.com/data-breaches-prevention/what-is-device-fingerprinting/2/
-[6]https://github.com/jackspirou/clientjs
+[3] https://github.com/codeep/React-Express-Boilerplate
+[4] https://github.com/Valve/fingerprintjs2
+[5] https://www.thesecuritybuddy.com/data-breaches-prevention/what-is-device-fingerprinting/2/
+[6] https://github.com/jackspirou/clientjs
+[7] https://yinzhicao.org/TrackingFree/crossbrowsertracking_NDSS17.pdf
 ```

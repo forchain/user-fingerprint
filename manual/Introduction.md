@@ -1,10 +1,10 @@
 # User-Print: One Machine One License 
 
 ## Abstract
-User-fingerprint is a live proof-of-concept project to demostrate how to make use of boweser fingerprint in order to identify a user and limit his accessibility only in one machine, so that he won't be able to share his one-user license to an unscribed user.
+User-fingerprint is an on-the-fly proof-of-concept project to demonstrate how to make use of browser ﬁngerprint in order to identify a user and limit his accessibility only in one machine so that he won't be able to share his one-user license to an unsubscribed user.
 
 ## Motivation
-Our data is valuable and we may live with if it gets enough protection so we have full control of it. However, in an digital world, the cost of making a copy of data is negligible. So, we need to protect our data from being misued by a wrong hand. Device fingerprint is a solution to identifiy a user by colleting necessary information from client remoting computing devices. Browser fingerprint is a branch of device fingerprint and is getting more and more prevailing since browser could be cross-platform and can be assible by any devivces. However, browser fingerprint is also facing much more chanllenges than other device fingerprint approaches because of no native accessiblility.
+Our data is valuable and we may live with if it gets enough protection so we have full control of it. However, in a digital world, the cost of making a copy of data is negligible. So, we need to protect our data from being misused by a wrong hand. Device fingerprint is a solution to identify a user by collecting necessary information from client remoting computing devices. Browser fingerprint is a branch of device fingerprint and is getting more and more prevailing since browser could be cross-platform and can be accessed by any devices. However, browser fingerprint is also facing much more challenges than other device fingerprint approaches because of no native accessibility.
 
 ## Terminology
 The technical specification should describe the syntax and semantics of any new feature. 
@@ -12,7 +12,7 @@ The technical specification should describe the syntax and semantics of any new 
 A device fingerprint, machine fingerprint, or browser fingerprint is information collected about a remote computing device for the purpose of identification. Fingerprints can be used to fully or partially identify individual users or devices even when persistent cookies (and also zombie cookies) can't be read or stored in the browser, the client IP address is hidden, and even if one switches to another browser on the same device. This may allow a remote application to detect and prevent online identity theft and credit card fraud, but also to compile long-term records of individuals' browsing histories even when they're attempting to avoid tracking, raising a major concern for internet privacy advocates.
 
 ### Browser Fingerprint[[2]](https://pixelprivacy.com/resources/browser-fingerprinting/)
-Browser fingerprinting is a powerful method that websites use to collect information about your browser type and version, as well as your operating system, active plugins, timezone, language, screen resolution and various other active settings.Websites use the information provided by browsers to identify unique users and track their online behavior.
+Browser fingerprinting is a powerful method that websites use to collect information about your browser type and version, as well as your operating system, active plugins, timezone, language, screen resolution and various other active settings. Websites use the information provided by browsers to identify unique users and track their online behaviour.
 
 ### Characteristic[[5]](https://www.thesecuritybuddy.com/data-breaches-prevention/what-is-device-fingerprinting/2/)
 1. Uniqueness
@@ -29,7 +29,7 @@ Browser fingerprinting is a powerful method that websites use to collect informa
 
 4. Integration
 
-    Device Fingerprinting technology used should be easily integrated with the business requirements. For example, it is good if a set of web-APIs enable integration of Device Fingerprinting into the existing business.
+    Device Fingerprinting technology used should be easily integrated with the business requirements. For example, it is good if a set of web-APIs enables the integration of Device Fingerprinting into the existing business.
 
 5. Zero Impact 
 
@@ -44,17 +44,17 @@ Browser fingerprinting is a powerful method that websites use to collect informa
     Device Fingerprinting solution should be able to effectively protect against first-time fraud attempts. It can be done by looking at a number of factors like whether the device is hiding its IP, location or Geo, whether the device is compromised by malware or part of a botnet etc.
 
 ## Performance analysis
-Browser has many advatanges, like cross platform, no native installtion requirement, also,  there are some disadvantages, for example, the biggest problems lies in that it has little accuracy than native device fingerprint. To be more formal, we use the characterstics to evaluate its performance
+The browser has many advantages, like cross-platform, no native installation requirement, also,  there are some disadvantages, for example, the biggest problems lies in that it has little accuracy than native device fingerprint. To be more formal, we use the characteristics to evaluate its performance
 1.  Uniqueness
 
-Browser API is really hard to read a uniqeness number since some device identifier like MAC ID needs native permission. So, the current solution is using multiple parameters combined to reduce the probability that two machines with their fingerprint collide.
+Browser API is really hard to read a uniqueness number since some device identifier like MAC ID needs native permission. So, the current solution is using multiple parameters combined to reduce the probability that two machines with their fingerprint collide.
 
 2. Persistence
-Browser API is so sensitive with paramerters change, even a slight reasonable one will make the fingerprint totally different and fail the idenfication. So, we need to seperate those reasonable from those unreasonable, for instance, fingerprint is using user-agent, which contains browser version. So, once browser upgraded, the fingerprint will not working any more. So, in the future work, we will make the detection more compatible with those sensative data points.
+Browser API is so sensitive with parameters change, even a slight reasonable one will make the fingerprint totally different and fail the identification. So, we need to separate those reasonable from those unreasonable, for instance, a fingerprint is using user-agent, which contains a browser version. So, once browser upgraded, the fingerprint will not work any more. So, in future work, we will make the detection more compatible with those sensitive data points.
 
 3.  Resistance
 
-HTML, CSS, DOM javascript are easy to be manupulated, so resistance is not so strong. In future, we would add more parameters, even intergate a local proxy, to increase the difficulties for the fingerprint to be tempered with.
+HTML, CSS, DOM javascript are easy to be manipulated, so resistance is not so strong. In future, we would add more parameters, even integrate a local proxy, to increase the difficulties for the fingerprint to be tempered with.
 
 4. Integration 
 
@@ -62,19 +62,19 @@ Browser fingerprint has strong integration advantages, all done by browsers.
 
 5. Zero Impack
 
-Also a strong adavantages, they are just ordinary websites from the browsers' perspective. No harm to devices.
+Also a strong advantage, they are just ordinary websites from the browsers' perspective. No harm to devices.
 
 6. No Delay
 
-It depends on which parameters caclulated, generally, it is fast. For this case, ClientJS computes fast so that we could not be ware of the fingerprint computation.
+It depends on which parameters calculated, generally, it is fast. For this case, ClientJS computes fast so that we could not beware of the fingerprint computation.
 
 7. First-time Fraud Detection
-Yes in this case. The system only generates the fingerprint on the registeration done.
+Yes in this case. The system only generates the fingerprint on the registration is done.
 
 Sum up, the system needs more Uniqueness, Persistence, Resistance, and I will reinforce those in future work.
 
 ## Use Cases
-[User-fingerprint](https://github.com/forchain/user-fingerprint), a proof-of-concept project to demostrate how to make use of boweser fingerprint in order to identify a user and limit his accessibility only in one machine, so that he won't be able to share his one-user license to an unscribed user.   
+[User-fingerprint](https://github.com/forchain/user-fingerprint), a proof-of-concept project to demonstrate how to make use of browser fingerprint in order to identify a user and limit his accessibility only in one machine, so that he won't be able to share his one-user license to an unsubscribed user.      
 
 ### Live Demo
 http://fingerprint.forchain.org/
@@ -109,7 +109,7 @@ Try to add, edit, and delete todos and enjoy all the functionalities provided.
 
 ### Instruction
 > Note:
-> To make it easy to be demostrated, I haven't made it cross-browser, which means it will treat different web broswers as different user, so we have no need to use two devices to perform the test, just one machine with 2 different browsers will do. 
+> To make it easy to be demonstrated, I haven't made it cross-browser, which means it will treat different web browsers as a different user, so we have no need to use two devices to perform the test, just one machine with 2 different browsers will do. 
 
 > In this case, we user Chrome to simulate UAE while Firefox to China.
 
@@ -151,7 +151,7 @@ Click the Plus button to add some testing ToDo items.
 ---
 
 #### 3. Log In account in differnt countries (browser)
-Did you recall that we used Chrome browser to simulate UAE device whereas Firefox to Chinese device? Now we are trying to log the China user in UAE or vice versa to simulate the situation that one user shared his account to his unsubscribed friend in another country, which violates the one machine one device policy of the website and would make a great loss to it.
+Did you recall that we used the Chrome browser to simulate UAE device whereas Firefox to Chinese device? Now we are trying to log the China user in UAE or vice versa to simulate the situation that one user shared his account to his unsubscribed friend in another country, which violates the one machine one device policy of the website and would make a great loss to it.
 
 ![Log Out-UAE User](images/LogOut-UAEUser.jpg)
 > Now we are in UAE and are trying to login China User
@@ -168,7 +168,7 @@ Did you recall that we used Chrome browser to simulate UAE device whereas Firefo
 
 ## Implementation
 ### Boilerplate[[3](https://github.com/codeep/React-Express-Boilerplate)
-This project is built based on a sophisticated boilerplate that uses React on front-end and Node.js (Express) on back-end.
+This project is built based on a sophisticated boilerplate that uses React on front-end and Node.js (Express) on the back-end.
 
 This boilerplate is empowered by the following technologies: • Redux
 * Redux-saga
